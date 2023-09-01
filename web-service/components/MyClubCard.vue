@@ -41,6 +41,16 @@ export default {
           title: "Club 3",
           to: "/club/3",
         },
+        {
+          icon: "mdi-list-box-outline",
+          title: "Club 2",
+          to: "/club/2",
+        },
+        {
+          icon: "mdi-magnify",
+          title: "Club 3",
+          to: "/club/3",
+        },
       ],
       title: "My Club",
     };

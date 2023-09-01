@@ -40,8 +40,8 @@
         <v-icon>mdi-bell</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-main>
-      <v-container style="max-width: 80%;">
+    <v-main >
+      <v-container style="max-width: 90%;">
         <Nuxt />
       </v-container>
     </v-main>
@@ -91,7 +91,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "WCD",
+      title: "WCD Capstone Design Team",
     };
   },
 };

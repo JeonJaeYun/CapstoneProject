@@ -8,13 +8,25 @@
         :to="category.to"
         router
         exact
-        style="padding: 0; display: flex; flex-direction: row; justify-content: center;"
+        style="
+          padding: 0;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        "
       >
         <v-list-item-action
-          style="margin:0; padding-top: 10px; padding-bottom: 10px; display: flex; flex-direction: column; align-items: center"
+          style="
+            margin: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
         >
           <v-icon>{{ category.icon }}</v-icon>
-          <v-list-item-title>{{ category.title }}</v-list-item-title>
+          <v-list-item-title style="margin-top:5px;">{{ category.title }}</v-list-item-title>
         </v-list-item-action>
       </v-list-item>
     </v-list>
@@ -28,34 +40,44 @@ export default {
     return {
       categories: [
         {
-          icon: "mdi-palette",
-          title: "Art",
-          to: "/art",
-        },
-        {
-          icon: "mdi-book-open-page-variant",
-          title: "Book",
-          to: "/book",
-        },
-        {
           icon: "mdi-music-box",
-          title: "Music",
+          title: "음악",
           to: "/music",
         },
         {
           icon: "mdi-chef-hat",
-          title: "Cook",
+          title: "요리",
           to: "/cook",
         },
         {
           icon: "mdi-soccer",
-          title: "Sports",
+          title: "운동",
           to: "/sports",
         },
         {
+          icon: "mdi-video-vintage",
+          title: "영화",
+          to: "/movie",
+        },
+        {
+          icon: "mdi-book-open-page-variant",
+          title: "독서",
+          to: "/book",
+        },
+        {
           icon: "mdi-airplane",
-          title: "Travel",
+          title: "여행",
           to: "/travel",
+        },
+        {
+          icon: "mdi-translate-variant",
+          title: "언어교환",
+          to: "/language",
+        },
+        {
+          icon: "mdi-palette",
+          title: "예술",
+          to: "/art",
         },
       ],
       title: "Club Categories",
