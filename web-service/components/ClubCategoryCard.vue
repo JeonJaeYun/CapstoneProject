@@ -79,11 +79,6 @@ export default {
           title: "예술",
           to: "/art",
         },
-        {
-          icon: "mdi-palette",
-          title: "테스트",
-          to: "/art",
-        },
       ],
       title: "Club Categories",
     };
