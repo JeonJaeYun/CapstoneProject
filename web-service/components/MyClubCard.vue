@@ -27,29 +27,29 @@ export default {
     return {
       clubs: [
         {
-          icon: "mdi-home-circle",
+          icon: "mdi-panorama-variant-outline",
           title: "Club 1",
           to: "/club/1",
         },
         {
-          icon: "mdi-list-box-outline",
+          icon: "mdi-panorama-variant-outline",
           title: "Club 2",
           to: "/club/2",
         },
         {
-          icon: "mdi-magnify",
+          icon: "mdi-panorama-variant-outline",
           title: "Club 3",
           to: "/club/3",
         },
         {
-          icon: "mdi-list-box-outline",
-          title: "Club 2",
-          to: "/club/2",
+          icon: "mdi-panorama-variant-outline",
+          title: "Club 4",
+          to: "/club/4",
         },
         {
-          icon: "mdi-magnify",
-          title: "Club 3",
-          to: "/club/3",
+          icon: "mdi-panorama-variant-outline",
+          title: "Club 5",
+          to: "/club/5",
         },
       ],
       title: "My Club",

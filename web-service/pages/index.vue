@@ -3,7 +3,6 @@
     <clubRecommendCard />
     <ClubCategoryCard />
     <MyClubCard />
-    <MyClubCard />
   </div>
 </template>
 
