@@ -1,5 +1,5 @@
 <template>
-  <v-card style="margin-top: 20%;">
+  <v-card>
     <v-card-title class="d-flex justify-center">
       <h1 style="padding:20px;">LOGIN</h1>
     </v-card-title>
@@ -22,6 +22,7 @@
           type="password"
         ></v-text-field>
         <v-checkbox v-model="remember" label="Remember me"></v-checkbox>
+        <v-btn to="/signup">SIGN UP</v-btn>
         <v-btn type="submit" class="contrast">LOGIN</v-btn>
       </v-form>
     </v-card-text>

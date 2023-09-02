@@ -1,5 +1,5 @@
 <template>
-  <v-card style="margin:10px; width:50%">
+  <v-card style="width:50%">
     <v-card-title>{{ title }}</v-card-title>
     <v-list>
       <v-list-item

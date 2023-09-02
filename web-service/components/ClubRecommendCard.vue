@@ -1,24 +1,28 @@
 <template>
-  <v-card style="margin: 10px; padding: 10px">
+  <v-card>
     <v-card-title>{{ title }}</v-card-title>
-    <v-row>
-      <v-col
-        v-for="(club, i) in displayedClubs"
-        :key="i"
-        cols="6"
-        style="padding: 5px;"
-      >
-        <v-list-item :to="club.to" router exact>
-          <v-list-item-action>
-            <v-icon>{{ club.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ club.title }}</v-list-item-title>
-            <v-list-item-description>{{ club.description }}</v-list-item-description>
-          </v-list-item-content>
-        </v-list-item>
-      </v-col>
-    </v-row>
+    <v-list>
+      <v-row style="margin: 0">
+        <v-col
+          v-for="(club, i) in displayedClubs"
+          :key="i"
+          cols="6"
+          style="padding: 0"
+        >
+          <v-list-item :to="club.to" router exact>
+            <v-list-item-action>
+              <v-icon>{{ club.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ club.title }}</v-list-item-title>
+              <v-list-item-subtitle>{{
+                club.description
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-col>
+      </v-row>
+    </v-list>
   </v-card>
 </template>
   
@@ -70,4 +74,9 @@ export default {
   },
 };
 </script>
-  
+
+<style>
+.v-card{
+  background-color: white;
+}
+</style>

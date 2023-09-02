@@ -1,5 +1,5 @@
 <template>
-  <v-card style="margin: 10px">
+  <v-card>
     <v-card-title>{{ title }}</v-card-title>
     <v-list style="display: flex; flex-direction: row">
       <v-list-item
