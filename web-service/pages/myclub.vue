@@ -1,12 +1,3 @@
 <template>
-  <MyClubListCard />
+  <div>My Club Page</div>
 </template>
-
-<script>
-import MyClubListCard from "../components/MyClubListCard.vue";
-
-export default {
-  name: "MyClubPage",
-  components: { MyClubListCard },
-};
-</script>

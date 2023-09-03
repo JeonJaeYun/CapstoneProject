@@ -16,3 +16,9 @@ export default {
   components: { MyClubCard, ClubRecommendCard, ClubCategoryCard },
 };
 </script>
+
+<style>
+.v-card{
+  margin-bottom: 30px;
+}
+</style>

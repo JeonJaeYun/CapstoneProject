@@ -1,14 +1,5 @@
 <template>
     <div>
-      <SignupCard/>
+      Signup Page
     </div>
   </template>
-    
-  <script>
-  import SignupCard from '../components/SignupCard.vue';
-  
-  export default {
-    name: "SignupPage",
-    components: { SignupCard },
-  };
-  </script>

@@ -7,25 +7,25 @@
       fixed
       app
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-            <v-list-item-title v-if="miniVariant" style="font-size: 12px">{{
-              item.title
-            }}</v-list-item-title>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+    <v-list>
+      <v-list-item
+        v-for="(item, i) in items"
+        :key="i"
+        :to="item.to"
+        router
+        exact
+      >
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+          <v-list-item-title v-if="miniVariant" style="font-size: 12px">{{
+            item.title
+          }}</v-list-item-title>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -52,49 +52,56 @@
           <v-list-item-title>NOTIFICATIONS</v-list-item-title>
         </v-list-item>
       </v-list>
-      <v-list>
-        <v-list-item
-          v-for="(notification, i) in notifications"
-          :key="i"
-          :to="notification.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ notification.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
-            <v-list-item-subtitle>{{ notification.contents }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ notification.time }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <v-list style="padding: 0">
+    <v-list-item
+      v-for="(notification, i) in notifications"
+      :key="i"
+      :to="notification.to"
+      router
+      exact
+    >
+      <v-list-item-action>
+        <v-icon>{{ notification.icon }}</v-icon>
+      </v-list-item-action>
+      <v-list-item-content>
+        <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
+        <v-list-item-subtitle>{{ notification.contents }}</v-list-item-subtitle>
+        <v-list-item-subtitle>{{ notification.time }}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="true" style="font-size: 13px" app>
       <span
         >&copy; {{ new Date().getFullYear() }} WCD Capstone Design Teams</span
       >
     </v-footer>
-    <!-- <v-footer :absolute="!fixed" style="font-size: 13px;" app>
-      <span>&copy; {{ new Date().getFullYear() }} WCD Capstone Design Teams</span>
-    </v-footer> -->
   </v-app>
 </template>
 
 <script>
 export default {
+  components: {  },
   name: "DefaultLayout",
   data() {
     return {
       clipped: true,
       drawer: false,
       fixed: false,
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "WCD Capstone Design Team",
       items: [
         {
           icon: "mdi-home-circle",
           title: "Home",
           to: "/",
+        },
+        {
+          icon: "mdi-account",
+          title: "My Profile",
+          to: "/myprofile",
         },
         {
           icon: "mdi-list-box-outline",
@@ -140,10 +147,6 @@ export default {
           to: "/club/3",
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: "WCD Capstone Design Team",
     };
   },
 };
