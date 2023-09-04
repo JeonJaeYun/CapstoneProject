@@ -3,46 +3,91 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
+      :mini-variant-width="miniVariantWidth"
       :clipped="clipped"
       fixed
       app
     >
-    <v-list>
-      <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
-        :to="item.to"
-        router
-        exact
-      >
-        <v-list-item-action>
-          <v-icon>{{ item.icon }}</v-icon>
-          <v-list-item-title v-if="miniVariant" style="font-size: 12px">{{
-            item.title
-          }}</v-list-item-title>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+      <v-list>
+        <v-list-item
+          v-for="(home, i) in homes"
+          :key="i"
+          :to="home.to"
+          router
+          exact
+          style="margin-bottom: 10px"
+        >
+          <v-list-item-action class="d-block mx-auto">
+            <v-icon style="width: 100%">{{ home.icon }}</v-icon>
+            <v-list-item-title style="font-size: 12px; text-align: center">{{
+              home.title
+            }}</v-list-item-title>
+          </v-list-item-action>
+        </v-list-item>
+
+        <v-list-item
+          v-for="(club, i) in clubs"
+          :key="i"
+          :to="club.to"
+          router
+          exact
+        >
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-list-item-action v-on="on" class="d-block mx-auto">
+                <img class="image" :src="club.image" />
+              </v-list-item-action>
+            </template>
+            <span>{{ club.clubName }}</span>
+            <!-- 툴팁 내용 설정 -->
+          </v-tooltip>
+        </v-list-item>
+
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action class="d-block mx-auto">
+            <v-icon style="width: 100%">{{ item.icon }}</v-icon>
+            <v-list-item-title style="font-size: 12px">{{
+              item.title
+            }}</v-list-item-title>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
-      </v-btn>
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer />
-      <v-btn icon to="/login">
-        <v-icon>mdi-login</v-icon>
+      <div class="input-container">
+        <v-icon class="icon">mdi-magnify</v-icon>
+        <input
+          type="text"
+          id="search"
+          name="search"
+          placeholder="검색어를 입력하세요..."
+        />
+      </div>
+      <v-spacer />
+      <v-btn icon to="/myprofile">
+        <v-icon>mdi-account-circle</v-icon>
       </v-btn>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-bell</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container style="max-width: 100%; padding: 30px">
+      <v-container
+        style="
+          max-width: 100%;
+          padding: 30px;
+          display: flex;
+          justify-content: center;
+        "
+      >
         <Nuxt />
       </v-container>
     </v-main>
@@ -53,23 +98,25 @@
         </v-list-item>
       </v-list>
       <v-list style="padding: 0">
-    <v-list-item
-      v-for="(notification, i) in notifications"
-      :key="i"
-      :to="notification.to"
-      router
-      exact
-    >
-      <v-list-item-action>
-        <v-icon>{{ notification.icon }}</v-icon>
-      </v-list-item-action>
-      <v-list-item-content>
-        <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
-        <v-list-item-subtitle>{{ notification.contents }}</v-list-item-subtitle>
-        <v-list-item-subtitle>{{ notification.time }}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+        <v-list-item
+          v-for="(notification, i) in notifications"
+          :key="i"
+          :to="notification.to"
+          router
+          exact
+        >
+          <v-list-item-action style="margin: 0; margin-right: 16px">
+            <img class="image" :src="notification.image" />
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
+            <v-list-item-subtitle>{{
+              notification.contents
+            }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ notification.time }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="true" style="font-size: 13px" app>
       <span
@@ -81,32 +128,96 @@
 
 <script>
 export default {
-  components: {  },
+  components: {},
   name: "DefaultLayout",
   data() {
     return {
-      clipped: true,
+      clipped: false,
       drawer: false,
       fixed: false,
-      miniVariant: false,
+      miniVariant: true,
       right: true,
       rightDrawer: false,
-      title: "WCD Capstone Design Team",
-      items: [
+      miniVariantWidth: 80,
+      homes: [
         {
           icon: "mdi-home-circle",
           title: "Home",
           to: "/",
         },
+      ],
+      notifications: [
         {
-          icon: "mdi-account",
-          title: "My Profile",
-          to: "/myprofile",
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club1",
+          contents: "새로운 모임원이 가입했습니다.",
+          time: "2023-02-01",
+          to: "/club/1",
         },
         {
-          icon: "mdi-list-box-outline",
-          title: "My Club",
-          to: "/myclub",
+          image:
+            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
+          clubName: "Club2",
+          contents: "새로운 공지가 등록되었습니다.",
+          time: "2023-02-01",
+          to: "/club/2",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club3",
+          contents: "contents example",
+          time: "2023-02-01",
+          to: "/club/3",
+        },
+      ],
+      clubs: [
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 1",
+          to: "/club/1",
+        },
+        {
+          image:
+            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
+          clubName: "Club 2",
+          to: "/club/2",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 3",
+          to: "/club/3",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 4",
+          to: "/club/4",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 5",
+          to: "/club/5",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 4",
+          to: "/club/4",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 5",
+          to: "/club/5",
+        },
+        {
+          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
+          clubName: "Club 4",
+          to: "/club/4",
+        },
+      ],
+      items: [
+        {
+          icon: "mdi-plus",
+          title: "Create",
+          to: "/club-create",
         },
         {
           icon: "mdi-magnify",
@@ -114,40 +225,48 @@ export default {
           to: "/club-search",
         },
         {
-          icon: "mdi-plus",
-          title: "Create",
-          to: "/club-create",
-        },
-        {
           icon: "mdi-cog",
           title: "Settings",
           to: "/settings",
-        },
-      ],
-      notifications: [
-        {
-          icon: "mdi-panorama-variant-outline",
-          clubName: "Club1",
-          contents: "새로운 모임원이 가입했습니다.",
-          time: "2023-02-01",
-          to: "/club/1",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          clubName: "Club2",
-          contents: "새로운 공지가 등록되었습니다.",
-          time: "2023-02-01",
-          to: "/club/2",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          clubName: "Club3",
-          contents: "contents example",
-          time: "2023-02-01",
-          to: "/club/3",
         },
       ],
     };
   },
 };
 </script>
+
+<style>
+/* 입력 필드와 아이콘을 감싸는 div를 정의 */
+.input-container {
+  display: flex;
+  align-items: center;
+  background-color: #333; /* 배경색 설정 */
+  height: 40px;
+  width: 400px;
+  border-radius: 5px;
+}
+
+/* 아이콘 스타일 설정 */
+.icon {
+  padding: 0 10px; /* 아이콘과 입력 필드 사이 여백 조정 */
+}
+
+/* 입력 필드 스타일 설정 */
+#search {
+  width: 100%;
+  height: 100%;
+  flex: 1; /* 남은 공간을 채우도록 설정 */
+  color: white; /* 입력 텍스트 색상 설정 */
+}
+
+#search:focus {
+  background-color: black; /* 포커스 시 배경색 검정색으로 변경 */
+  color: white; /* 글자색 변경 */
+}
+
+.image {
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+}
+</style>
