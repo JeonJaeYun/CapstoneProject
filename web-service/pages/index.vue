@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;">
+  <div>
     <clubRecommendCard />
     <ClubCategoryCard />
     <MyClubCard />
@@ -21,4 +21,4 @@ export default {
 .v-card{
   margin-bottom: 30px;
 }
-</style>
+</style> 

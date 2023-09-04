@@ -15,7 +15,7 @@
           :to="home.to"
           router
           exact
-          style="margin-bottom: 10px"
+          style="margin-bottom: 10px;"
         >
           <v-list-item-action class="d-block mx-auto">
             <v-icon style="width: 100%">{{ home.icon }}</v-icon>
@@ -34,7 +34,7 @@
         >
           <v-tooltip right>
             <template v-slot:activator="{ on }">
-              <v-list-item-action v-on="on" class="d-block mx-auto">
+              <v-list-item-action v-on="on" class="d-block mx-auto"  style="height:45px;">
                 <img class="image" :src="club.image" />
               </v-list-item-action>
             </template>

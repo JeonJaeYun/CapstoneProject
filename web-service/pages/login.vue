@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:100%;">
     <v-card>
       <v-card-title class="d-flex justify-center">
         <h1 style="padding: 20px">LOGIN</h1>
