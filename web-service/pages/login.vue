@@ -5,13 +5,12 @@
         <h1 style="padding: 20px">LOGIN</h1>
       </v-card-title>
       <v-card-text>
-        <v-form @submit.prevent="signIn">
+        <v-form @submit.prevent="Login">
           <v-text-field
-            v-model="email"
+            v-model="loginId"
             label="ID"
             placeholder="ID"
             required
-            autocomplete="nickname"
             type="ID"
           ></v-text-field>
           <v-text-field
@@ -19,7 +18,6 @@
             label="Password"
             placeholder="Password"
             required
-            autocomplete="current-password"
             type="password"
           ></v-text-field>
           <v-checkbox v-model="remember" label="Remember me"></v-checkbox>
@@ -35,14 +33,46 @@
 export default {
   data() {
     return {
-      email: "",
+      loginId: "",
       password: "",
-      remember: false,
     };
   },
   methods: {
-    signIn() {
-      // Sign in logic here
+    async Login() {
+      // JSON 형식의 데이터
+      let LoginData = {
+        loginId: this.loginId,
+        password: this.password,
+      };
+
+      try {
+        if (this.loginId === "") {
+          alert("ID를 입력하세요.");
+          return;
+        }
+        if (this.password === "") {
+          alert("비밀번호를 입력하세요.");
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json", // JSON 형식으로 변경
+          },
+        };
+
+        await this.$axios
+          .post("/user-service/login", JSON.stringify(LoginData), config)
+          .then((res) => {
+            console.log(res);
+            alert("로그인 되었습니다.");
+            this.$router.push("/")
+            // access in memory
+            // refresh session
+          });
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

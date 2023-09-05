@@ -1,129 +1,138 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :mini-variant-width="miniVariantWidth"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(home, i) in homes"
-          :key="i"
-          :to="home.to"
-          router
-          exact
-          style="margin-bottom: 10px;"
-        >
-          <v-list-item-action class="d-block mx-auto">
-            <v-icon style="width: 100%">{{ home.icon }}</v-icon>
-            <v-list-item-title style="font-size: 12px; text-align: center">{{
-              home.title
-            }}</v-list-item-title>
-          </v-list-item-action>
-        </v-list-item>
-
-        <v-list-item
-          v-for="(club, i) in clubs"
-          :key="i"
-          :to="club.to"
-          router
-          exact
-        >
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-list-item-action v-on="on" class="d-block mx-auto"  style="height:45px;">
-                <img class="image" :src="club.image" />
-              </v-list-item-action>
-            </template>
-            <span>{{ club.clubName }}</span>
-            <!-- 툴팁 내용 설정 -->
-          </v-tooltip>
-        </v-list-item>
-
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action class="d-block mx-auto">
-            <v-icon style="width: 100%">{{ item.icon }}</v-icon>
-            <v-list-item-title style="font-size: 12px">{{
-              item.title
-            }}</v-list-item-title>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-spacer />
-      <div class="input-container">
-        <v-icon class="icon">mdi-magnify</v-icon>
-        <input
-          type="text"
-          id="search"
-          name="search"
-          placeholder="검색어를 입력하세요..."
-        />
-      </div>
-      <v-spacer />
-      <v-btn icon to="/myprofile">
-        <v-icon>mdi-account-circle</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
-    </v-app-bar>
-    <v-main>
-      <v-container
-        style="
-          max-width: 100%;
-          padding: 30px;
-          display: flex;
-          justify-content: center;
-        "
+  <div>
+    <div></div>
+    <v-app dark>
+      <v-navigation-drawer
+        v-model="drawer"
+        :mini-variant="miniVariant"
+        :mini-variant-width="miniVariantWidth"
+        :clipped="clipped"
+        fixed
+        app
       >
-        <Nuxt />
-      </v-container>
-    </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item>
-          <v-list-item-title>NOTIFICATIONS</v-list-item-title>
-        </v-list-item>
-      </v-list>
-      <v-list style="padding: 0">
-        <v-list-item
-          v-for="(notification, i) in notifications"
-          :key="i"
-          :to="notification.to"
-          router
-          exact
+        <v-list>
+          <v-list-item
+            v-for="(home, i) in homes"
+            :key="i"
+            :to="home.to"
+            router
+            exact
+            style="margin-bottom: 10px"
+          >
+            <v-list-item-action class="d-block mx-auto">
+              <v-icon style="width: 100%">{{ home.icon }}</v-icon>
+              <v-list-item-title style="font-size: 12px; text-align: center">{{
+                home.title
+              }}</v-list-item-title>
+            </v-list-item-action>
+          </v-list-item>
+
+          <v-list-item
+            v-for="(club, i) in clubs"
+            :key="i"
+            :to="club.to"
+            router
+            exact
+          >
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-list-item-action
+                  v-on="on"
+                  class="d-block mx-auto"
+                  style="height: 45px"
+                >
+                  <img class="image" :src="club.image" />
+                </v-list-item-action>
+              </template>
+              <span>{{ club.clubName }}</span>
+              <!-- 툴팁 내용 설정 -->
+            </v-tooltip>
+          </v-list-item>
+
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action class="d-block mx-auto">
+              <v-icon style="width: 100%">{{ item.icon }}</v-icon>
+              <v-list-item-title style="font-size: 12px">{{
+                item.title
+              }}</v-list-item-title>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <v-app-bar :clipped-left="clipped" fixed app>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-spacer />
+        <div class="input-container">
+          <v-icon class="icon">mdi-magnify</v-icon>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="검색어를 입력하세요..."
+          />
+        </div>
+        <v-spacer />
+        <v-btn icon to="/myprofile">
+          <v-icon>mdi-account-circle</v-icon>
+        </v-btn>
+        <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+          <v-icon>mdi-bell</v-icon>
+        </v-btn>
+      </v-app-bar>
+      <v-main>
+        <v-container
+          style="
+            max-width: 100%;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+          "
         >
-          <v-list-item-action style="margin: 0; margin-right: 16px">
-            <img class="image" :src="notification.image" />
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
-            <v-list-item-subtitle>{{
-              notification.contents
-            }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ notification.time }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="true" style="font-size: 13px" app>
-      <span
-        >&copy; {{ new Date().getFullYear() }} WCD Capstone Design Teams</span
-      >
-    </v-footer>
-  </v-app>
+          <Nuxt />
+        </v-container>
+      </v-main>
+      <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>NOTIFICATIONS</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        <v-list style="padding: 0">
+          <v-list-item
+            v-for="(notification, i) in notifications"
+            :key="i"
+            :to="notification.to"
+            router
+            exact
+          >
+            <v-list-item-action style="margin: 0; margin-right: 16px">
+              <img class="image" :src="notification.image" />
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ notification.clubName }}</v-list-item-title>
+              <v-list-item-subtitle>{{
+                notification.contents
+              }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{
+                notification.time
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <v-footer :fixed="true" style="font-size: 13px" app>
+        <span
+          >&copy; {{ new Date().getFullYear() }} WCD Capstone Design Teams</span
+        >
+      </v-footer>
+    </v-app>
+  </div>
 </template>
 
 <script>
