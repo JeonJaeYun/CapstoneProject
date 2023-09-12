@@ -39,10 +39,11 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    'nuxt-vuex-localstorage'
   ],
 
   axios: {
-    baseURL: "http://211.115.222.246:8080"
+    baseURL: process.env.API_BASE_URL
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -66,5 +67,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  router: {
+    middleware: ['auth'], // 전역으로 사용할 미들웨어를 등록
+  },
 }

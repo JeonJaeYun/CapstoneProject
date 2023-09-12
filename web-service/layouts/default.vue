@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div></div>
     <v-app dark>
       <v-navigation-drawer
         v-model="drawer"
@@ -10,59 +9,78 @@
         fixed
         app
       >
-        <v-list>
-          <v-list-item
-            v-for="(home, i) in homes"
-            :key="i"
-            :to="home.to"
-            router
-            exact
-            style="margin-bottom: 10px"
-          >
-            <v-list-item-action class="d-block mx-auto">
-              <v-icon style="width: 100%">{{ home.icon }}</v-icon>
-              <v-list-item-title style="font-size: 12px; text-align: center">{{
-                home.title
-              }}</v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
-
-          <v-list-item
-            v-for="(club, i) in clubs"
-            :key="i"
-            :to="club.to"
-            router
-            exact
-          >
-            <v-tooltip right>
-              <template v-slot:activator="{ on }">
-                <v-list-item-action
-                  v-on="on"
-                  class="d-block mx-auto"
-                  style="height: 45px"
+        <v-list style="height:100%;">
+          <div style="height:10%;">
+            <v-list-item
+              v-for="(home, i) in homes"
+              :key="i"
+              :to="home.to"
+              router
+              exact
+              style="margin-bottom: 10px"
+            >
+              <v-list-item-action class="d-block mx-auto">
+                <v-icon style="width: 100%">{{ home.icon }}</v-icon>
+                <v-list-item-title
+                  style="font-size: 12px; text-align: center"
+                  >{{ home.title }}</v-list-item-title
                 >
-                  <img class="image" :src="club.image" />
-                </v-list-item-action>
-              </template>
-              <span>{{ club.clubName }}</span>
-              <!-- 툴팁 내용 설정 -->
-            </v-tooltip>
-          </v-list-item>
+              </v-list-item-action>
+            </v-list-item>
+          </div>
 
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="item.to"
-            router
-            exact
+          <div class="drawer-content" style="height:65%;">
+            <v-list-item
+              v-for="(club, i) in clubs"
+              :key="i"
+              :to="club.to"
+              router
+              exact
+            >
+              <v-tooltip right>
+                <template v-slot:activator="{ on }">
+                  <v-list-item-action
+                    v-on="on"
+                    class="d-block mx-auto"
+                    style="height: 45px"
+                  >
+                    <img class="image" :src="club.image" />
+                  </v-list-item-action>
+                </template>
+                <span>{{ club.clubName }}</span>
+                <!-- 툴팁 내용 설정 -->
+              </v-tooltip>
+            </v-list-item>
+          </div>
+
+          <div
+            style="
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              height:25%;
+              text-align: center;
+            "
           >
-            <v-list-item-action class="d-block mx-auto">
-              <v-icon style="width: 100%">{{ item.icon }}</v-icon>
-              <v-list-item-title style="font-size: 12px">{{
-                item.title
-              }}</v-list-item-title>
-            </v-list-item-action>
-          </v-list-item>
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+              :to="item.to"
+              router
+              exact
+              class="d-block mx-auto"
+              style="text-align: center"
+            >
+              <v-list-item-action>
+                <v-icon style="width: 100%; display: block; margin: 0 auto">{{
+                  item.icon
+                }}</v-icon>
+                <v-list-item-title style="font-size: 12px">{{
+                  item.title
+                }}</v-list-item-title>
+              </v-list-item-action>
+            </v-list-item>
+          </div>
         </v-list>
       </v-navigation-drawer>
       <v-app-bar :clipped-left="clipped" fixed app>
@@ -136,8 +154,10 @@
 </template>
 
 <script>
+import LoginPage from "../pages/login.vue";
 export default {
-  components: {},
+  middleware: 'auth', 
+  components: { LoginPage },
   name: "DefaultLayout",
   data() {
     return {
@@ -277,5 +297,21 @@ export default {
   width: 45px;
   height: 45px;
   border-radius: 5px;
+}
+.drawer-content {
+  height: calc(100vh - 56px); /* 56px는 앱 바 높이 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+.drawer-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb {
+  background-color: #888; /* 스크롤바 색상 */
+  border-radius: 5px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 </style>

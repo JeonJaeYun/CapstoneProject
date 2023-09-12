@@ -1,17 +1,17 @@
 <template>
-  <div style="width:100%;">
-    <v-card>
+  <div style="width: 500px; margin-top: 180px">
+    <v-card style="background-color: rgba(0, 0, 0, 0.9)">
       <v-card-title class="d-flex justify-center">
         <h1 style="padding: 20px">LOGIN</h1>
       </v-card-title>
       <v-card-text>
         <v-form @submit.prevent="Login">
           <v-text-field
-            v-model="loginId"
-            label="ID"
-            placeholder="ID"
+            v-model="email"
+            label="E-mail"
+            placeholder="E-mail"
             required
-            type="ID"
+            type="E-mail"
           ></v-text-field>
           <v-text-field
             v-model="password"
@@ -20,9 +20,9 @@
             required
             type="password"
           ></v-text-field>
-          <v-checkbox v-model="remember" label="Remember me"></v-checkbox>
-          <v-btn to="/signup">SIGN UP</v-btn>
-          <v-btn type="submit" class="contrast">LOGIN</v-btn>
+          <v-checkbox v-model="remember" label="자동 로그인"></v-checkbox>
+          <v-btn to="/signup">회원가입</v-btn>
+          <v-btn type="submit" class="contrast">로그인</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -33,21 +33,25 @@
 export default {
   data() {
     return {
-      loginId: "",
+      email: "",
       password: "",
+      remember: false,
     };
+  },
+  layout(context) {
+    return "login";
   },
   methods: {
     async Login() {
       // JSON 형식의 데이터
       let LoginData = {
-        loginId: this.loginId,
+        email: this.email,
         password: this.password,
       };
 
       try {
-        if (this.loginId === "") {
-          alert("ID를 입력하세요.");
+        if (this.email === "") {
+          alert("이메일을 입력하세요.");
           return;
         }
         if (this.password === "") {
@@ -66,9 +70,14 @@ export default {
           .then((res) => {
             console.log(res);
             alert("로그인 되었습니다.");
-            this.$router.push("/")
-            // access in memory
-            // refresh session
+            // access_token을 in-memory 저장
+            // 컴포넌트 또는 액션 내에서 엑세스 토큰 저장
+            this.$store.commit("setAccessToken", res.data.access_token);
+
+            // refresh_token을 session에 저장
+            sessionStorage.setItem("refresh_token", res.data.refresh_token);
+
+            this.$router.push("/");
           });
       } catch (err) {
         console.log(err);
