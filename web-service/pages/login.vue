@@ -20,9 +20,10 @@
             required
             type="password"
           ></v-text-field>
+          <v-btn to="/signup" style="width:100%;">아직 회원이 아니신가요?</v-btn>
           <v-checkbox v-model="remember" label="자동 로그인"></v-checkbox>
-          <v-btn to="/signup">회원가입</v-btn>
-          <v-btn type="submit" class="contrast">로그인</v-btn>
+          
+          <v-btn type="submit" class="contrast" style="width:100%;">로그인</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -73,13 +74,19 @@ export default {
             // access_token을 in-memory 저장
             // 컴포넌트 또는 액션 내에서 엑세스 토큰 저장
             this.$store.commit("setAccessToken", res.data.access_token);
+            this.$store.commit("setUserId", res.data.user_id);
 
             // refresh_token을 session에 저장
             sessionStorage.setItem("refresh_token", res.data.refresh_token);
 
             this.$router.push("/");
           });
-      } catch (err) {
+      } catch (error) {
+        if (error.response && error.response.status === 401) { 
+              alert("유저 정보가 일치하지 않습니다."); 
+              console.log(error.response); 
+              return; 
+            } 
         console.log(err);
       }
     },

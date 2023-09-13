@@ -9,8 +9,8 @@
         fixed
         app
       >
-        <v-list style="height:100%;">
-          <div style="height:10%;">
+        <v-list style="height: 100%">
+          <div style="margin-bottom: 10px;">
             <v-list-item
               v-for="(home, i) in homes"
               :key="i"
@@ -29,11 +29,11 @@
             </v-list-item>
           </div>
 
-          <div class="drawer-content" style="height:65%;">
+          <div class="drawer-content" style="height:fit-content">
             <v-list-item
-              v-for="(club, i) in clubs"
+              v-for="(myclub, i) in myclubs"
               :key="i"
-              :to="club.to"
+              :to="`/club/${myclub.clubId}`"
               router
               exact
             >
@@ -44,11 +44,10 @@
                     class="d-block mx-auto"
                     style="height: 45px"
                   >
-                    <img class="image" :src="club.image" />
+                    <img class="image" :src="myclub.image" />
                   </v-list-item-action>
                 </template>
-                <span>{{ club.clubName }}</span>
-                <!-- 툴팁 내용 설정 -->
+                <span>{{ myclub.clubName }}</span>
               </v-tooltip>
             </v-list-item>
           </div>
@@ -58,8 +57,8 @@
               position: absolute;
               bottom: 0;
               width: 100%;
-              height:25%;
               text-align: center;
+              margin-bottom:30px;
             "
           >
             <v-list-item
@@ -96,7 +95,8 @@
           />
         </div>
         <v-spacer />
-        <v-btn icon to="/myprofile">
+        <v-btn style="color: rgb(255, 125, 125)" @click="logout">로그아웃</v-btn>
+        <v-btn icon>
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -107,6 +107,7 @@
         <v-container
           style="
             max-width: 100%;
+            height:100%;
             padding: 30px;
             display: flex;
             justify-content: center;
@@ -154,10 +155,7 @@
 </template>
 
 <script>
-import LoginPage from "../pages/login.vue";
 export default {
-  middleware: 'auth', 
-  components: { LoginPage },
   name: "DefaultLayout",
   data() {
     return {
@@ -175,72 +173,41 @@ export default {
           to: "/",
         },
       ],
-      notifications: [
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club1",
-          contents: "새로운 모임원이 가입했습니다.",
-          time: "2023-02-01",
-          to: "/club/1",
+      notifications: [],
+      myclubs: [
+      {
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 1",
         },
         {
-          image:
-            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
-          clubName: "Club2",
-          contents: "새로운 공지가 등록되었습니다.",
-          time: "2023-02-01",
-          to: "/club/2",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 2",
         },
         {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club3",
-          contents: "contents example",
-          time: "2023-02-01",
-          to: "/club/3",
-        },
-      ],
-      clubs: [
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 1",
-          to: "/club/1",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 3",
         },
         {
-          image:
-            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
-          clubName: "Club 2",
-          to: "/club/2",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 4",
         },
         {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 3",
-          to: "/club/3",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 5",
         },
         {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 1",
         },
         {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 5",
-          to: "/club/5",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 2",
         },
         {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
+          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+          title: "Club 3",
         },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 5",
-          to: "/club/5",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
-        },
+        
       ],
       items: [
         {
@@ -260,6 +227,22 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    logout() {
+      // Vuex에서 access_token 제거
+      this.$store.commit('setAccessToken', null);
+
+      // 세션 스토리지에서 refresh_token 제거
+      sessionStorage.removeItem('refresh_token');
+
+      // 로그아웃 후 필요한 추가 로직 작성
+
+      // 예시로 홈 페이지로 리다이렉트하는 경우:
+      this.$router.push('/login');
+    },
+    
+    // ...
   },
 };
 </script>

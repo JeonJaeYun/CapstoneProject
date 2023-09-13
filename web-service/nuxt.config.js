@@ -70,6 +70,8 @@ export default {
   },
 
   router: {
-    middleware: ['auth'], // 전역으로 사용할 미들웨어를 등록
+    middleware: ['auth'], 
   },
+
+  ssr: false,
 }

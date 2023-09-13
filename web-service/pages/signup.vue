@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 600px; margin-bottom: 140px">
+  <div style="width: 600px; margin-top: 40px">
     <v-container>
-      <v-card style="background-color: rgba(0, 0, 0, 0.5)">
+      <v-card style="background-color: rgba(0, 0, 0, 0.9)">
         <v-card-title class="d-flex justify-center">
           <h1 style="padding: 20px">SIGN UP</h1>
         </v-card-title>
@@ -215,8 +215,8 @@ export default {
         (v) =>
           this.emailRegex.test(v) || "이메일은 영문+숫자만 입력 가능합니다.",
         (v) =>
-          (v && v.length >= 5 && v.length < 20) ||
-          "이메일은 5글자 이상, 20글자 미만이어야 합니다.",
+          (v && v.length >= 5 && v.length < 40) ||
+          "이메일은 5글자 이상, 40글자 미만이어야 합니다.",
       ],
       password: "",
       pwCheck: "",
@@ -370,7 +370,7 @@ export default {
       if (
         this.emailRegex.test(this.email) &&
         this.email.length >= 5 &&
-        this.email.length < 20
+        this.email.length < 40
       ) {
         this.isEmailValid = true;
       } else {
