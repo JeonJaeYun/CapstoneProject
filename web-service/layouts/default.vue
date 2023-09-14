@@ -10,7 +10,7 @@
         app
       >
         <v-list style="height: 100%">
-          <div style="margin-bottom: 10px;">
+          <div style="margin-bottom: 10px">
             <v-list-item
               v-for="(home, i) in homes"
               :key="i"
@@ -29,7 +29,7 @@
             </v-list-item>
           </div>
 
-          <div class="drawer-content" style="height:fit-content">
+          <div class="drawer-content" style="height: fit-content">
             <v-list-item
               v-for="(myclub, i) in myclubs"
               :key="i"
@@ -58,7 +58,7 @@
               bottom: 0;
               width: 100%;
               text-align: center;
-              margin-bottom:30px;
+              margin-bottom: 30px;
             "
           >
             <v-list-item
@@ -95,7 +95,9 @@
           />
         </div>
         <v-spacer />
-        <v-btn style="color: rgb(255, 125, 125)" @click="logout">로그아웃</v-btn>
+        <v-btn style="color: rgb(255, 125, 125)" @click="Logout"
+          >로그아웃</v-btn
+        >
         <v-btn icon>
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
@@ -107,7 +109,7 @@
         <v-container
           style="
             max-width: 100%;
-            height:100%;
+            height: 100%;
             padding: 30px;
             display: flex;
             justify-content: center;
@@ -175,38 +177,11 @@ export default {
       ],
       notifications: [],
       myclubs: [
-      {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 1",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 2",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 3",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 4",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 5",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 1",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 2",
-        },
-        {
-          image: "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-          title: "Club 3",
-        },
+        // {
+        //   image:
+        //     "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
+        //   title: "Club 1",
+        // }
         
       ],
       items: [
@@ -229,21 +204,80 @@ export default {
     };
   },
   methods: {
-    logout() {
-      // Vuex에서 access_token 제거
-      this.$store.commit('setAccessToken', null);
+    async Logout() {
+      let LogoutData = {
+        access_token: this.$store.state.access_token,
+        refresh_token: sessionStorage.getItem("refresh_token"),
+      };
+      console.log(LogoutData.access_token)
+      console.log(LogoutData.refresh_token)
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${LogoutData.access_token}`,
+          },
+        };
 
-      // 세션 스토리지에서 refresh_token 제거
-      sessionStorage.removeItem('refresh_token');
+        await this.$axios
+          .post("/user-service/user/logout", JSON.stringify(LogoutData), config)
+          .then((res) => {
+            console.log(res);
+            alert("로그아웃 되었습니다.");
 
-      // 로그아웃 후 필요한 추가 로직 작성
-
-      // 예시로 홈 페이지로 리다이렉트하는 경우:
-      this.$router.push('/login');
+            this.$store.commit("setAccessToken", null);
+            sessionStorage.removeItem("refresh_token");
+            
+            this.$router.push("/login");
+          });
+      } catch (error) {
+        console.log(error);
+      }
     },
-    
-    // ...
+
+    async getClubs(){
+      try {
+        const access_token = this.$store.state.access_token
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${access_token}`,
+          }
+        };
+        await this.$axios
+        .get(`/club-service/clubs`, config)
+        .then((res) => {
+          console.log(res.data);
+        });
+      }catch(err){
+        console.log(err)
+      }
+    },
+
+    async getMyClubs(){
+      try {
+        const access_token = this.$store.state.access_token
+        const user_id = this.$store.state.user_id
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${access_token}`,
+          }
+        };
+        await this.$axios
+        .get(`/club-service/users/${user_id}/clubs`, config)
+        .then((res) => {
+          console.log(res.data);
+        });
+      }catch(err){
+        console.log(err)
+      }
+    }
   },
+  created(){
+    this.getMyClubs();
+    this.getClubs();
+  }
 };
 </script>
 
