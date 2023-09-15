@@ -10,7 +10,10 @@
         app
       >
         <v-list style="height: 100%">
-          <div style="margin-bottom: 10px">
+          <div
+            ref="homeHeight"
+            style="margin-bottom: 10px; height: fit-content"
+          >
             <v-list-item
               v-for="(home, i) in homes"
               :key="i"
@@ -29,11 +32,11 @@
             </v-list-item>
           </div>
 
-          <div class="drawer-content" style="height: fit-content">
+          <div class="drawer-content" ref="clubHeight">
             <v-list-item
               v-for="(myclub, i) in myclubs"
               :key="i"
-              :to="`/club/${myclub.clubId}`"
+              :to="`/clubs/${myclub.id}`"
               router
               exact
             >
@@ -44,7 +47,10 @@
                     class="d-block mx-auto"
                     style="height: 45px"
                   >
-                    <img class="image" :src="myclub.image" />
+                    <img
+                      class="image"
+                      :src="getImageDataUri(myclub.multipartFile)"
+                    />
                   </v-list-item-action>
                 </template>
                 <span>{{ myclub.clubName }}</span>
@@ -52,13 +58,15 @@
             </v-list-item>
           </div>
 
-          <div
+          <div        
+            ref="itemHeight"    
             style="
               position: absolute;
               bottom: 0;
               width: 100%;
               text-align: center;
               margin-bottom: 30px;
+              margin margin-top: 10px;
             "
           >
             <v-list-item
@@ -176,14 +184,8 @@ export default {
         },
       ],
       notifications: [],
-      myclubs: [
-        // {
-        //   image:
-        //     "https://cdn.pixabay.com/photo/2022/04/18/13/56/flower-7140631_1280.jpg",
-        //   title: "Club 1",
-        // }
-        
-      ],
+      myclubs: [],
+      clubs: [],
       items: [
         {
           icon: "mdi-plus",
@@ -209,13 +211,13 @@ export default {
         access_token: this.$store.state.access_token,
         refresh_token: sessionStorage.getItem("refresh_token"),
       };
-      console.log(LogoutData.access_token)
-      console.log(LogoutData.refresh_token)
+      console.log(LogoutData.access_token);
+      console.log(LogoutData.refresh_token);
       try {
         const config = {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${LogoutData.access_token}`,
+            Authorization: `Bearer ${LogoutData.access_token}`,
           },
         };
 
@@ -227,7 +229,7 @@ export default {
 
             this.$store.commit("setAccessToken", null);
             sessionStorage.removeItem("refresh_token");
-            
+
             this.$router.push("/login");
           });
       } catch (error) {
@@ -235,49 +237,74 @@ export default {
       }
     },
 
-    async getClubs(){
+    async getClubs() {
       try {
-        const access_token = this.$store.state.access_token
+        const access_token = this.$store.state.access_token;
         const config = {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${access_token}`,
-          }
+            Authorization: `Bearer ${access_token}`,
+          },
         };
-        await this.$axios
-        .get(`/club-service/clubs`, config)
-        .then((res) => {
-          console.log(res.data);
+        await this.$axios.get(`/club-service/clubs`, config).then((res) => {
+          console.log(res);
+          this.clubs = res.data;
         });
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     },
 
-    async getMyClubs(){
+    async getMyClubs() {
       try {
-        const access_token = this.$store.state.access_token
-        const user_id = this.$store.state.user_id
+        const access_token = this.$store.state.access_token;
+        const user_id = this.$store.state.user_id;
         const config = {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${access_token}`,
-          }
+            Authorization: `Bearer ${access_token}`,
+          },
         };
         await this.$axios
-        .get(`/club-service/users/${user_id}/clubs`, config)
-        .then((res) => {
-          console.log(res.data);
-        });
-      }catch(err){
-        console.log(err)
+          .get(`/club-service/users/${user_id}/clubs`, config)
+          .then((res) => {
+            console.log(res.data);
+            this.myclubs = res.data;
+          });
+      } catch (err) {
+        console.log(err);
       }
-    }
+    },
+    getImageDataUri(imageData) {
+      return `data:image/jpg;base64,${imageData}`;
+    },
+    adjustDrawerHeight() {
+      // homeHeight, itemHeight, clubHeight의 높이 값을 가져옴
+      const homeHeight = this.$refs.homeHeight.clientHeight;
+      const itemHeight = this.$refs.itemHeight.clientHeight;
+      const windowHeight = window.innerHeight;
+
+      // clubHeight에 적절한 높이를 설정
+      this.$refs.clubHeight.style.height =
+      windowHeight - homeHeight - itemHeight - 80 + "px";
+    },
   },
-  created(){
+  watch: {
+    // 화면 크기가 변경될 때마다 높이를 조절
+    $route() {
+      this.adjustDrawerHeight();
+    },
+    $vuetify: {
+      handler() {
+        this.adjustDrawerHeight();
+      },
+      deep: true,
+    },
+  },
+  created() {
     this.getMyClubs();
     this.getClubs();
-  }
+  },
 };
 </script>
 

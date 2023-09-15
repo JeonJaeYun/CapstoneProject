@@ -131,12 +131,28 @@ export default {
       maximumPeople: "", // 모임 인원
       tagInput: "",
       tagList: [], // 태그 리스트
+      defaultImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZfPzoyq-RUkAEjwz13d0WckOBy0-iWE3PqQ&usqp=CAU"
     };
   },
   methods: {
     async CreateClubSubmit() {
       const formData = new FormData();
-      formData.append("multipartFile", this.multipartFile);
+
+      if (!this.multipartFile) {
+        // 이미지 파일을 불러옵니다.
+        const response = await fetch(this.defaultImagePath);
+        const defaultImageBlob = await response.blob();
+
+        // File 객체로 변환하여 FormData에 추가합니다.
+        const defaultImageFile = new File(
+          [defaultImageBlob],
+          "defaultImage.jpg"
+        );
+        formData.append("multipartFile", defaultImageFile);
+      } else {
+        formData.append("multipartFile", this.multipartFile);
+      }
+
       formData.append("clubName", this.clubName);
       formData.append("category", this.category);
       formData.append("description", this.description);
@@ -181,11 +197,11 @@ export default {
       }
     },
     addTag() {
-      if(this.tagInput.trim() !== ""){
+      if (this.tagInput.trim() !== "") {
         this.tagList.push(this.tagInput.trim());
-        this.tagInput = ""
-      }else{
-        alert("태그를 입력하세요.")
+        this.tagInput = "";
+      } else {
+        alert("태그를 입력하세요.");
       }
     },
 
@@ -196,16 +212,16 @@ export default {
   watch: {
     tagList: {
       handler(newTags) {
-        console.log('tags이 변경되었습니다:', newTags);
+        console.log("tags이 변경되었습니다:", newTags);
       },
       deep: true, // 중첩된 객체 또는 배열을 감시하려면 deep 옵션을 true로 설정
     },
-    formData:{
-      handler(newData){
-        console.log("asdf", newData)
+    formData: {
+      handler(newData) {
+        console.log("asdf", newData);
       },
-      deep:true
-    }
+      deep: true,
+    },
   },
 };
 </script>

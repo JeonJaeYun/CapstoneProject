@@ -26,7 +26,7 @@
   </v-card>
 </template>
   
-  <script>
+<script>
 export default {
   name: "ClubRecommendCard",
   data() {
