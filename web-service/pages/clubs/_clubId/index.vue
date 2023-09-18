@@ -1,23 +1,21 @@
 <template>
-  <div
-    style="
-      color: white;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-    "
-  >
-    <LeftClubNav/>
-    <div>
-      <ClubNavigation/>
-      <div>router view</div>
+  <div style="width:100%">
+    <ClubNavigation />
+    <div
+      style="
+        color: white;
+        display: flex;
+        flex-direction: row;
+      "
+    >
+      <LeftClubNav />
+      <router-view style="padding:20px;"/>
     </div>
   </div>
 </template>
 
 <script>
-import LeftClubNav from '../../../components/LeftClubNav.vue';
+import LeftClubNav from "../../../components/LeftClubNav.vue";
 import ClubNavigation from "../../../components/ClubNavigation.vue";
 
 export default {
@@ -25,6 +23,5 @@ export default {
     ClubNavigation,
     LeftClubNav,
   },
-  
 };
 </script>

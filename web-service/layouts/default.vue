@@ -91,8 +91,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-app-bar :clipped-left="clipped" fixed app>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-spacer />
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
         <div class="input-container">
           <v-icon class="icon">mdi-magnify</v-icon>
           <input
@@ -121,7 +120,7 @@
           style="
             max-width: 100%;
             height: 100%;
-            padding: 30px;
+            padding: 0;
             display: flex;
             justify-content: center;
           "
@@ -332,12 +331,19 @@ export default {
   width: 100%;
   height: 100%;
   flex: 1; /* 남은 공간을 채우도록 설정 */
-  color: white; /* 입력 텍스트 색상 설정 */
+  color: rgb(255, 255, 255); /* 입력 텍스트 색상 설정 */
+}
+
+#search::placeholder {
+  color: #d4d4d4; /* 입력창의 플레이스홀더(검색어를 입력하세요) 색상 설정 */
 }
 
 #search:focus {
-  background-color: black; /* 포커스 시 배경색 검정색으로 변경 */
-  color: white; /* 글자색 변경 */
+  color: white; 
+}
+
+#search:focus::placeholder {
+  color: gray; 
 }
 
 .image {

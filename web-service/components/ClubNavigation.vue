@@ -1,21 +1,34 @@
 <template>
-    <div style="padding:10px; background-color: #333; border-radius: 10px;">
-      <v-row no-gutters>
-        <v-chip
-          v-for="(navList, i) in navLists"
-          :key="i"
-          cols="auto"
-          class="d-flex"
-          style="margin:10px;"
-        >
-          <v-list-item router exact>
-            <v-icon>{{ navList.icon }}</v-icon>
-            <h3>{{ navList.title }}</h3>
-          </v-list-item>
-        </v-chip>
-      </v-row>
-    </div>
-  </template>
+  <v-list
+    no-gutters
+    justify-center
+    class="d-flex"
+    style="
+      padding-left: 20%;
+      padding-right: 20%;
+      padding-bottom: 0;
+      padding-top: 0;
+    "
+  >
+    <v-list-item
+      v-for="(navList, i) in navLists"
+      :key="i"
+      :to="`/clubs/${$route.params.clubId}/${navList.to}`"
+      router
+      exact
+      cols="auto"
+      style="padding: 0; cursor: pointer;"
+    >
+      <v-list-item-content class="text-center" style="border-radius: 5px">
+        <v-icon style="font-size: 18px">{{ navList.icon }}</v-icon>
+        <v-list-item-title style="font-size: 14px">{{
+          navList.title
+        }}</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
+</template>
+
 
 <script>
 export default {
@@ -23,29 +36,30 @@ export default {
   data() {
     return {
       navLists: [
-      {
-          icon: "mdi-panorama-variant-outline",
+        {
+          icon: "mdi-home",
           title: "홈",
+          to: "",
         },
         {
-          icon: "mdi-panorama-variant-outline",
+          icon: "mdi-alert-box",
           title: "공지사항",
+          to: "notice",
         },
         {
-          icon: "mdi-panorama-variant-outline",
+          icon: "mdi-calendar",
           title: "일정",
+          to: "schedule",
         },
         {
-          icon: "mdi-panorama-variant-outline",
+          icon: "mdi-clipboard-text",
           title: "게시판",
+          to: "board",
         },
         {
-          icon: "mdi-panorama-variant-outline",
+          icon: "mdi-webcam",
           title: "화상채팅",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "2D 가상환경",
+          to: "notice",
         },
       ],
     };

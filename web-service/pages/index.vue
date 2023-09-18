@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;">
+  <div style="width:100%; padding:30px;">
     <clubRecommendCard />
     <ClubCategoryCard />
     <MyClubCard />
