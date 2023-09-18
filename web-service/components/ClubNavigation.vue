@@ -1,17 +1,18 @@
 <template>
-    <div>
+    <div style="padding:10px; background-color: #333; border-radius: 10px;">
       <v-row no-gutters>
-        <v-col
+        <v-chip
           v-for="(navList, i) in navLists"
           :key="i"
           cols="auto"
           class="d-flex"
+          style="margin:10px;"
         >
           <v-list-item router exact>
             <v-icon>{{ navList.icon }}</v-icon>
             <h3>{{ navList.title }}</h3>
           </v-list-item>
-        </v-col>
+        </v-chip>
       </v-row>
     </div>
   </template>

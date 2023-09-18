@@ -209,20 +209,6 @@ export default {
       this.tagList.splice(index, 1);
     },
   },
-  watch: {
-    tagList: {
-      handler(newTags) {
-        console.log("tags이 변경되었습니다:", newTags);
-      },
-      deep: true, // 중첩된 객체 또는 배열을 감시하려면 deep 옵션을 true로 설정
-    },
-    formData: {
-      handler(newData) {
-        console.log("asdf", newData);
-      },
-      deep: true,
-    },
-  },
 };
 </script>
 

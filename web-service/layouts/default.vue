@@ -103,6 +103,9 @@
           />
         </div>
         <v-spacer />
+        <v-btn icon>
+          <v-icon>mdi-chat-processing-outline</v-icon>
+        </v-btn>
         <v-btn style="color: rgb(255, 125, 125)" @click="Logout"
           >로그아웃</v-btn
         >

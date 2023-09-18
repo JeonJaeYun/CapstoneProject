@@ -13,8 +13,3 @@ export default function ({ route, redirect }) {
     }
   }
 }
-// export default function ({ store, redirect }) {
-//   return store.dispatch('checkAuth')
-//     .then(() => redirect('/home'))
-//     .catch(() => redirect('/login'));
-// }
