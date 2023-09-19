@@ -59,7 +59,7 @@ export default {
         {
           icon: "mdi-webcam",
           title: "화상채팅",
-          to: "notice",
+          to: "cam",
         },
       ],
     };

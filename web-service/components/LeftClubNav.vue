@@ -1,12 +1,20 @@
 <template>
-  <div style="height:100%; padding:20px; padding-right: 40px; padding-left: 40px; border-right: 1px solid white;">
+  <div
+    style="
+      height: 100%;
+      padding: 20px;
+      padding-right: 40px;
+      padding-left: 40px;
+      border-right: 1px solid rgb(127, 127, 127);
+    "
+  >
     <img
       :src="getImageDataUri(clubInfo.multipartFile)"
       style="height: 180px; width: 240px; border: 1px solid #ffffff"
     />
     <h1>{{ clubInfo.clubName }}</h1>
     <p>{{ clubInfo.description }}</p>
-    <hr/>
+    <hr />
   </div>
 </template>
 
