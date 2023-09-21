@@ -58,8 +58,8 @@
             </v-list-item>
           </div>
 
-          <div        
-            ref="itemHeight"    
+          <div
+            ref="itemHeight"
             style="
               position: absolute;
               bottom: 0;
@@ -91,7 +91,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-app-bar :clipped-left="clipped" fixed app>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         <div class="input-container">
           <v-icon class="icon">mdi-magnify</v-icon>
           <input
@@ -102,9 +102,6 @@
           />
         </div>
         <v-spacer />
-        <v-btn icon>
-          <v-icon>mdi-chat-processing-outline</v-icon>
-        </v-btn>
         <v-btn style="color: rgb(255, 125, 125)" @click="Logout"
           >로그아웃</v-btn
         >
@@ -187,7 +184,6 @@ export default {
       ],
       notifications: [],
       myclubs: [],
-      clubs: [],
       items: [
         {
           icon: "mdi-plus",
@@ -209,58 +205,46 @@ export default {
   },
   methods: {
     async Logout() {
-      let LogoutData = {
-        access_token: this.$store.state.access_token,
-        refresh_token: sessionStorage.getItem("refresh_token"),
-      };
-      console.log(LogoutData.access_token);
-      console.log(LogoutData.refresh_token);
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${LogoutData.access_token}`,
-          },
+      const confirmed = window.confirm("로그아웃하시겠습니까?");
+
+      if (confirmed) {
+        let LogoutData = {
+          access_token: this.$store.state.access_token,
+          refresh_token: sessionStorage.getItem("refresh_token"),
         };
+        try {
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${LogoutData.access_token}`,
+            },
+          };
 
-        await this.$axios
-          .post("/user-service/user/logout", JSON.stringify(LogoutData), config)
-          .then((res) => {
-            console.log(res);
-            alert("로그아웃 되었습니다.");
+          await this.$axios
+            .post(
+              "/user-service/user/logout",
+              JSON.stringify(LogoutData),
+              config
+            )
+            .then((res) => {
+              alert("로그아웃 되었습니다.");
 
-            this.$store.commit("setAccessToken", null);
-            sessionStorage.removeItem("refresh_token");
+              this.$store.commit("setAccessToken", null);
+              sessionStorage.removeItem("refresh_token");
+              sessionStorage.removeItem("user_id");
 
-            this.$router.push("/login");
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async getClubs() {
-      try {
-        const access_token = this.$store.state.access_token;
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        };
-        await this.$axios.get(`/club-service/clubs`, config).then((res) => {
-          console.log(res);
-          this.clubs = res.data;
-        });
-      } catch (err) {
-        console.log(err);
+              this.$router.push("/login");
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
 
     async getMyClubs() {
       try {
         const access_token = this.$store.state.access_token;
-        const user_id = this.$store.state.user_id;
+        const user_id = sessionStorage.getItem("user_id");
         const config = {
           headers: {
             "Content-Type": "application/json",
@@ -288,13 +272,8 @@ export default {
 
       // clubHeight에 적절한 높이를 설정
       this.$refs.clubHeight.style.height =
-      windowHeight - homeHeight - itemHeight - 80 + "px";
+        windowHeight - homeHeight - itemHeight - 80 + "px";
     },
-    // search() {
-    //   const searchTerm = document.getElementById("search").value;
-    //   // 검색어를 사용하여 특정 페이지로 이동
-    //   this.$router.push(`/search-results?query=${searchTerm}`);
-    // },
   },
   watch: {
     // 화면 크기가 변경될 때마다 높이를 조절
@@ -310,7 +289,6 @@ export default {
   },
   created() {
     this.getMyClubs();
-    this.getClubs();
   },
 };
 </script>
@@ -344,11 +322,11 @@ export default {
 }
 
 #search:focus {
-  color: white; 
+  color: white;
 }
 
 #search:focus::placeholder {
-  color: gray; 
+  color: gray;
 }
 
 .image {

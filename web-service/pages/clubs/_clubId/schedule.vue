@@ -1,19 +1,14 @@
 <template>
   <div style="width: 100%">
     <ClubNavigation />
-    <div style="color: white; display: flex; flex-direction: row; height: fit-content">
+    <div style="color: white; display: flex; flex-direction: row">
       <LeftClubNav />
-      <div
-        style="
-          padding: 20px;
-          padding-left: 40px;
-          padding-right: 40px;
-        "
-      >
-        <FullCalendar
-          :options="calendarOptions"
-          style="width: 900px; height: 700px;"
-        />
+
+      <div style="width:950px; padding:20px;">
+        <FullCalendar :options="calendarOptions"/>
+      </div>
+      <div style="padding:20px;">
+        Schedule List
       </div>
     </div>
   </div>

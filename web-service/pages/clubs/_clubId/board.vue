@@ -1,26 +1,31 @@
 <template>
-    <div style="width:100%">
-      <ClubNavigation />
+  <div style="width: 100%">
+    <ClubNavigation />
+    <div style="color: white; display: flex; flex-direction: row">
+      <LeftClubNav/>
       <div
         style="
-          color: white;
-          display: flex;
-          flex-direction: row;
+          width: 950px;
+          padding: 20px;
+          border-right: 1px solid rgb(127, 127, 127);
         "
       >
-        <LeftClubNav />
+      <CKEditor style="color:black"/>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
-  import LeftClubNav from "../../../components/LeftClubNav.vue";
-  import ClubNavigation from "../../../components/ClubNavigation.vue";
-  
-  export default {
-    components: {
-      ClubNavigation,
-      LeftClubNav,
-    },
-  };
-  </script>
+import LeftClubNav from "../../../components/LeftClubNav.vue";
+import ClubNavigation from "../../../components/ClubNavigation.vue";
+import CKEditor from '~/components/CKEditor.vue';
+
+export default {
+  components: {
+    ClubNavigation,
+    LeftClubNav,
+    CKEditor,
+  },
+};
+</script>

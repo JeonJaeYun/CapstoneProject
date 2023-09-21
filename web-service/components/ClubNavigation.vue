@@ -13,7 +13,7 @@
     <v-list-item
       v-for="(navList, i) in navLists"
       :key="i"
-      :to="`/clubs/${$route.params.clubId}/${navList.to}`"
+      :to="`/clubs/${$route.params.clubId}${navList.to}`"
       router
       exact
       cols="auto"
@@ -44,22 +44,22 @@ export default {
         {
           icon: "mdi-alert-box",
           title: "공지사항",
-          to: "notice",
+          to: "/notice",
         },
         {
           icon: "mdi-calendar",
           title: "일정",
-          to: "schedule",
+          to: "/schedule",
         },
         {
           icon: "mdi-clipboard-text",
           title: "게시판",
-          to: "board",
+          to: "/board",
         },
         {
           icon: "mdi-webcam",
           title: "화상채팅",
-          to: "cam",
+          to: "/cam",
         },
       ],
     };

@@ -164,7 +164,7 @@
               placeholder="성별"
               @input="validateGender"
             ></v-select>
-
+            <v-btn to="/login" style="width:100%;">이미 회원이신가요?</v-btn>
             <v-btn
               :disabled="
                 !(

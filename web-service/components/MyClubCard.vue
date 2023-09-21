@@ -27,14 +27,14 @@ export default {
   data() {
     return {
       myclubs: [],
-      title: "My Club",
+      title: "나의 모임",
     };
   },
   methods:{
     async getMyClubs() {
       try {
         const access_token = this.$store.state.access_token;
-        const user_id = this.$store.state.user_id;
+        const user_id = sessionStorage.getItem("user_id");
         const config = {
           headers: {
             "Content-Type": "application/json",

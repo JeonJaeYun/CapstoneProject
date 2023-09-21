@@ -1,20 +1,26 @@
 <template>
-  <div
-    style="
-      height: 100%;
-      padding: 20px;
-      padding-right: 40px;
-      padding-left: 40px;
-      border-right: 1px solid rgb(127, 127, 127);
-    "
-  >
+  <div style="padding: 20px; padding-right: 40px; padding-left: 40px">
     <img
       :src="getImageDataUri(clubInfo.multipartFile)"
-      style="height: 180px; width: 240px; border: 1px solid #ffffff"
+      style="width: 320px; height: 240px"
     />
-    <h1>{{ clubInfo.clubName }}</h1>
-    <p>{{ clubInfo.description }}</p>
+
+    <h1 style="margin-top: 10px">{{ clubInfo.clubName }}</h1>
+
+    <p style="margin-top: 10px">{{ clubInfo.description }}</p>
+    <p style="margin-top: 10px; font-size: 13px; color: rgb(125, 255, 125)">
+      정원 수 : {{ clubInfo.maximumPeople }}
+    </p>
     <hr />
+    <div class="d-flex flex-column" style="margin-top: 10px;">
+      <v-btn>글쓰기</v-btn>
+      <v-btn
+        v-if="this.user_id == clubInfo.hostId"
+        :to="`/clubs/${clubInfo.id}/settings`"
+        >모임 수정</v-btn
+      >
+      <v-btn v-else>모임 탈퇴</v-btn>
+    </div>
   </div>
 </template>
 
@@ -24,6 +30,7 @@ export default {
   data() {
     return {
       clubInfo: {},
+      user_id: sessionStorage.getItem("user_id"),
     };
   },
   methods: {

@@ -2,16 +2,12 @@
 
 export const state = () => ({
   access_token: null,
-  user_id: null,
 });
 
 export const mutations = {
   setAccessToken(state, access_token) {
     state.access_token = access_token;
   },
-  setUserId(state, user_id){
-    state.user_id = user_id;
-  }
 };
 
 export const actions = {
