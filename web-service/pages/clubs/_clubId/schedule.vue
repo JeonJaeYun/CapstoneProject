@@ -4,7 +4,7 @@
     <div style="color: white; display: flex; flex-direction: row">
       <LeftClubNav />
 
-      <div style="width:950px; padding:20px;">
+      <div style="width:930px; padding:20px;">
         <FullCalendar :options="calendarOptions"/>
       </div>
       <div style="padding:20px;">
